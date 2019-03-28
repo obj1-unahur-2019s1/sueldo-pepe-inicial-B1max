@@ -1,0 +1,78 @@
+object pepe {
+	//proposito : imprime una ayuda para usar el programa
+	//paremetros : ninguno
+	method ayuda(){
+		console.println("categoria : 0 = gerente, 1 = cadete")	
+		console.println("Resultado : 0 = porcentaje, 1 = monto fijo , 2 = nulo")
+		console.println("bonopresentismo: 0 = normal  1 = ajuste 2 = demagogico  3 = nulo")
+		console.println("formato -> pepe.Sueldo(categoria, diasAusente, bonoPresentismo, bonoResultado)  ")
+		console.println("Ejemplo : pepe.Sueldo(0,0,0,0)")
+	}
+	
+	//proposito : calcula el sueldo y lo retorna por consola
+	//paremetros : categoria , diasAus, bonopresentismo, bonoresultado
+	method Sueldo(categoria, diasAus, bonopresentismo, bonoresultado){
+		return self.neto(categoria) + 
+		self.bonoPresentismo(bonopresentismo, self.neto(categoria), diasAus) + 
+		self.bonoResultados(bonoresultado, self.neto(categoria))
+	}
+	
+	//proposito : cacula el sueldo neto y lo retorna
+	//paremetros : categoria
+	method neto(categoria){
+		if (categoria == 0){ //gerente
+			return 15000
+		}else{ //cadete
+			return 20000
+		}
+	}
+	
+	//proposito :	calcula el bono por presentismo y lo retorna
+	//paremetros : bonopresentismo, categoria, diasAus
+	method bonoPresentismo(bonopresentismo, categoria, diasAus){
+		var retorno //nulo
+		if (bonopresentismo == 0){//normal
+			if (diasAus == 0){
+				retorno = 2000
+			}
+			if (diasAus == 1){
+				retorno = 1000
+			}
+			if (diasAus > 1){
+				retorno = 0
+			}
+		}
+		if (bonopresentismo == 1){//ajuste
+			if (diasAus == 0){
+				retorno = 100
+			}else{
+				retorno = 0
+			}
+		}
+		if (bonopresentismo == 2){//demagógico
+			if (categoria <= 18000){
+				retorno = 500
+			}
+			if (categoria > 1800){
+				retorno = 300
+			}
+		}
+		if (bonopresentismo == 3){
+			retorno = 0
+		}
+		return retorno
+	}
+	
+	//proposito :	calcula el bono por resultado y lo retorna
+	//paremetros : bonoresultado, categoria
+	method bonoResultados(bonoresultado, categoria){
+		var retorno = 0  //nulo
+		if (bonoresultado == 0){ //porcentaje 10%
+			retorno = (categoria * 1.1) - categoria
+		}
+		if (bonoresultado == 1){ // monto fijo
+			retorno = 800
+		}
+		return retorno
+	}
+}
